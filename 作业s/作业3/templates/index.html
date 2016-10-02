@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo</title>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"
+            integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/todo.js"></script>
+</head>
+<body>
+<h1>Todo</h1>
+<input id="todo-add-input" name="todo" placeholder="Add todo">
+<button id="todo-add-button" type="submit">Add</button>
+<div class="todo-items">
+    {% for t in todos %}
+        <div class="todo-item">
+            <span class="todo-content">
+                {{ t.id }}
+                {{ t.task }}
+                {{ t.created_time }}
+            </span>
+            <button class="todo-edit-button">Edit</button>
+            <button class="todo-delete-button" data-id={{ t.id }}>Delete</button>
+            <div class="todo-edit" style="display: none">
+                <input class="todo-edit-input" name="todo-edited" placeholder="Edit Todo">
+                <button type="submit" class="todo-edit-submit-button" data-id={{ t.id }}>Edit</button>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>

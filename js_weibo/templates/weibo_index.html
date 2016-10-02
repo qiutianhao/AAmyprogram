@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/pure-min.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"
+            integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/weibo.js"></script>
+    <title>blog</title>
+</head>
+<body>
+<div class="head"></div>
+
+<div class="weibo-add">
+    <input id="id-input-weibo" name="weibo" class="wei" placeholder="Weibo"> </input>
+    <br>
+    <button id="id-button-weibo-add" class="pure-button pure-button-primary sub"
+            type="submit">水一发！
+    </button>
+</div>
+
+<div class="weibo-container">
+    {% for t in weibos %}
+    <div class="weibo-cell">
+        <img src="{{ t.avatar }}" class="avatar">
+        <span class="weibo-content-span">{{ t.weibo }}</span>
+        <span class="weibo-created_time-span">{{ t.created_time }}</span>
+        by: {{ t.name }}
+        <div class="weibo-content">
+            <button class="weibo-delete" data-id="{{ t.id }}">删除</button>
+            <button class="weibo-comment">评论({{ t.comments_num }})</button>
+            <button class="weibo-edit">编辑</button>
+        </div>
+        <div class="comment-div hide comment-container">
+            <div class="comment-list">
+                {% for c in t.comment %}
+                <div class="cell-inner item">
+                    <img src="{{ c.avatar }}" class="avatar-s">
+                    <span>{{ c.comment }}</span>
+                    {{ c.created_time }}
+                    by:{{ c.name }}
+                </div>
+                {% endfor %}
+            </div>
+            <div class="comment-add">
+                <input id="id-input-comment-id" type="hidden" name="weibo_id" value="{{ t.id }}">
+                <input id="id-input-comment-content" name="content" class="left m" placeholder="Comment">
+                <button id="id-button-comment-add" class="comment-add-button" data-weibo-id="{{ t.id }}">发表</button>
+            </div>
+        </div>
+        <div class="hide edit-container" id="edit">
+            <input id="id-input-edit-id" type="hidden" name="weibo_id" value="{{ t.id }}">
+            <input id="id-input-edit" name="weibo" class="left m" placeholder="Edit">
+            <button id="id-button-edit" class="weibo-edit" data-weibo-id="{{ t.id }}">编辑</button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</body>
+</html>

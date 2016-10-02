@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo</title>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"
+            integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+    <script>
+        var todoTemplate = function (todo) {
+            return `
+                <div class="todo-item">
+                    ${ todo }
+                    <button type="submit" class="todo-edit-button">Edit</button>
+                    <button type="submit" class="todo-delete-button">Delete</button>
+                    <div class="todo-edit" style="display: none">
+                        <input class="todo-edit-input" name="todo-edited">
+                        <button type="submit" class="todo-edit-submit-button">Edit</button>
+                    </div>
+                </div>
+            `
+        }
+
+        var todoEditToggle = function () {
+            $('.todo-items').on('click', '.todo-edit-button', function () {
+                $(this).next().next().slideToggle()
+            })
+        }
+
+        var todoAdd = function () {
+            $('#todo-add-button').on('click', function () {
+                var todo = $('#todo-add-input').val()
+                var todo_items = $('.todo-items')
+                todo_items.prepend(todoTemplate(todo))
+            })
+        }
+
+        var todoDelete = function () {
+            $('.todo-items').on('click', '.todo-delete-button', function () {
+                $(this).parent().remove()
+            })
+        }
+
+        var todoEdit = function () {
+            $('.todo-items').on('click', '.todo-edit-submit-button', function () {
+                var todo_edited = $(this).prev().val()
+                var todo_items = $('.todo-items')
+                $(this).closest('.todo-item').remove()
+                todo_items.prepend(todoTemplate(todo_edited))
+            })
+        }
+
+        var bindEvents = function () {
+            todoAdd()
+            todoTemplate()
+            todoEditToggle()
+            todoEdit()
+            todoDelete()
+        }
+
+        $(document).ready(function () {
+            bindEvents()
+        })
+    </script>
+</head>
+<body>
+<h1 class="h1">Todo</h1>
+<input id="todo-add-input" placeholder="Add Todo" name="todo">
+<button id="todo-add-button" type="submit">Add Todo</button>
+<div class="todo-items">
+</div>
+</body>
+</html>
